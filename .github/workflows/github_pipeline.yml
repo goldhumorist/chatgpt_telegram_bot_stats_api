@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  check-build:
+  check-vulnerabilities:
     runs-on: ubuntu-latest
     strategy:
       matrix:
