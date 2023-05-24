@@ -1,7 +1,7 @@
 import { searchByUsernameRepo } from '../../domain-model/search-by-username.repo';
 import UseCaseBase from '../base.service';
 import {
-  ICommonSearchDBResponse,
+  TSearchDBResponseWithSuggestions,
   ISearchByUsernameParams,
   ISearchByUsernameResponse,
   ISearchByUsernameResponseDump,
@@ -29,7 +29,9 @@ export class SearchByUsernameService extends UseCaseBase<
     return { data: dumpedResponse };
   }
 
-  dumpResponse(data: ICommonSearchDBResponse): ISearchByUsernameResponseDump {
+  dumpResponse(
+    data: TSearchDBResponseWithSuggestions,
+  ): ISearchByUsernameResponseDump {
     const { hits } = data.hits;
 
     const dumpedResult: ISearchByUsernameResponseDump = {

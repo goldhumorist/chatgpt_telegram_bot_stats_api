@@ -1,6 +1,6 @@
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import {
-  ICommonSearchDBResponse,
+  TSearchDBResponseWithSuggestions,
   ISearchByUsernameParams,
   TRange,
 } from '../interfaces';
@@ -52,7 +52,7 @@ export class SearchByUsernameRepo extends UserRequestToGPTLog {
       query: searchQuery,
     });
 
-    return searchResponse as any as ICommonSearchDBResponse;
+    return searchResponse as any as TSearchDBResponseWithSuggestions;
   }
 }
 

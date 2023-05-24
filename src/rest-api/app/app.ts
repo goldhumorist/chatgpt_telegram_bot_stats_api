@@ -1,9 +1,10 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import mainSeachRouter from '../main-routers/main-search-router';
+import Routers from '../routers/index';
 import { errorHandler, notFound } from '../../lib/helpers/not-found-error';
 
+const { mainSeachRouter, statisticRouter } = Routers;
 const app = express();
 
 /** Setup CORS policy */
@@ -17,6 +18,7 @@ app.use(helmet());
 app.get('/favicon.ico', (req: Request, res: Response) => res.status(204));
 
 app.use('/api/v1/search', mainSeachRouter);
+app.use('/api/v1/statistic', statisticRouter);
 
 app.use(notFound);
 app.use(errorHandler);
