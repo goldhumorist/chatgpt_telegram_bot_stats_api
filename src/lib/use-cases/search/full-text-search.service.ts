@@ -1,45 +1,45 @@
 import validator from 'validator';
 import { fullTextSearchRepo } from '../../domain-model/full-text-search.repo';
 import {
-  IFullTextSearchResponse,
+  IFullTextSearchDBResponse,
   IFullTextSearchResponseDump,
-  ISearchInQuestionParams,
-  ISearchInQuestionResponse,
+  IFullTextSearchParams,
+  IFullTextSearchResponse,
   IUseCaseBase,
 } from '../../interfaces';
 import UseCaseBase from '../base.service';
 
-export default class SearchInQuestion
-  extends UseCaseBase<ISearchInQuestionParams, ISearchInQuestionResponse>
-  implements IUseCaseBase<ISearchInQuestionParams, ISearchInQuestionResponse>
+export default class FullTextSearchService
+  extends UseCaseBase<IFullTextSearchParams, IFullTextSearchResponse>
+  implements IUseCaseBase<IFullTextSearchParams, IFullTextSearchResponse>
 {
-  static validationRules: ISearchInQuestionParams = {
+  static validationRules: IFullTextSearchParams = {
     phraseToSearch: ['required', { min_length: 2 }],
     searchIn: ['required', { one_of: ['question', 'response'] }],
     page: ['required', 'positive_integer', { min_number: 1 }],
     limit: ['positive_integer', { min_number: 1 }],
     searchFrom: 'iso_date',
     searchTo: 'iso_date',
-  } as unknown as ISearchInQuestionParams;
+  } as unknown as IFullTextSearchParams;
 
-  async sanitize(
-    data: ISearchInQuestionParams,
-  ): Promise<ISearchInQuestionParams> {
+  async sanitize(data: IFullTextSearchParams): Promise<IFullTextSearchParams> {
     return {
       ...data,
       phraseToSearch: validator.blacklist(data.phraseToSearch || '', '*'),
     };
   }
 
-  async execute(data: ISearchInQuestionParams) {
-    const response = await fullTextSearchRepo.searchInQuestionField(data);
+  async execute(data: IFullTextSearchParams) {
+    const response = await fullTextSearchRepo.fullTextSearchInUserRequestLog(
+      data,
+    );
 
     const dumpedResponse = this.dumpResponse(response);
 
     return { data: dumpedResponse };
   }
 
-  dumpResponse(data: IFullTextSearchResponse): IFullTextSearchResponseDump {
+  dumpResponse(data: IFullTextSearchDBResponse): IFullTextSearchResponseDump {
     const { hits } = data.hits;
     const suggestions = data.suggest.simple_phrase[0]?.options;
 

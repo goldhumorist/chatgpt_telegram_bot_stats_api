@@ -1,10 +1,10 @@
 import { Request } from 'express';
-import SearchInQuestion from '../../lib/use-cases/search/search-in-question.service';
+import FullTextSearchService from '../../lib/use-cases/search/full-text-search.service';
 import chista from '../utils/chistaUtils';
 
 export default {
-  searchInQuestion: chista.makeUseCaseRunner(
-    SearchInQuestion,
+  fullTextSearch: chista.makeUseCaseRunner(
+    FullTextSearchService,
     (req: Request) => {
       return { ...req.query };
     },

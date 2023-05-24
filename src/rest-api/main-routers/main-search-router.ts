@@ -3,6 +3,6 @@ import controllers from '../controllers/index';
 
 const router = express.Router();
 
-router.get('/in-question', controllers.search.searchInQuestion);
+router.get('/full-text', controllers.search.fullTextSearch);
 
 export default router;

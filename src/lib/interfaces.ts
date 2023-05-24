@@ -37,7 +37,7 @@ export type IUnresolvedHits = Array<{
   _source: IUserRequestLog;
 }>;
 
-export interface IFullTextSearchResponse {
+export interface IFullTextSearchDBResponse {
   took: string;
   timed_out: boolean;
   hits: {
@@ -71,7 +71,7 @@ export interface IFullTextSearchResponseDump {
   suggestions: IUserRequestLogSuggestions;
 }
 
-export interface ISearchInQuestionParams {
+export interface IFullTextSearchParams {
   phraseToSearch: string;
   searchIn: 'question' | 'response';
   page: number;
@@ -80,6 +80,6 @@ export interface ISearchInQuestionParams {
   searchTo: string;
 }
 
-export interface ISearchInQuestionResponse {
+export interface IFullTextSearchResponse {
   data: IFullTextSearchResponseDump;
 }
