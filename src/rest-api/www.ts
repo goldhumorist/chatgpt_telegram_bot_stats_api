@@ -2,6 +2,7 @@
 import http from 'http';
 import { config } from '../config';
 import app from './app/app';
+import { ElasticSearch } from '../lib/infrastructure/elasticsearch/elasticsearch-connect';
 
 const port = normalizePort(config.SERVER.PORT);
 const host = config.SERVER.HOST;
@@ -17,6 +18,9 @@ server.on('listening', onListening);
  */
 async function onListening() {
   console.log(`CONFIG`, config);
+
+  await ElasticSearch.getClient();
+
   console.log(`Application is running on ${host}:${port}.`);
 
   const address = server.address();

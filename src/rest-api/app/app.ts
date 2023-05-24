@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import mainSeachRouter from '../main-routers/main-search-router';
+import { errorHandler, notFound } from '../../lib/helpers/not-found-error';
 
 const app = express();
 
@@ -14,12 +16,13 @@ app.use(helmet());
 
 app.get('/favicon.ico', (req: Request, res: Response) => res.status(204));
 
-app.use((req: Request, res: Response) => {
-  console.log('INIT request handler');
-  res.end('SUCCESS');
-});
+app.use('/api/v1/search', mainSeachRouter);
+
+app.use(notFound);
+app.use(errorHandler);
 
 process.on('unhandledRejection', (reason: Error) => {
+  console.error('unhandledRejection', reason);
   throw reason;
 });
 
