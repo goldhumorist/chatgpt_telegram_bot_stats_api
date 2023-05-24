@@ -1,5 +1,9 @@
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
-import { ISearchByUsernameParams, TRange } from '../interfaces';
+import {
+  ICommonSearchDBResponse,
+  ISearchByUsernameParams,
+  TRange,
+} from '../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
 import { DEFAULT_PAGE_SIZE } from '../constans';
 
@@ -48,7 +52,7 @@ export class SearchByUsernameRepo extends UserRequestToGPTLog {
       query: searchQuery,
     });
 
-    return searchResponse;
+    return searchResponse as any as ICommonSearchDBResponse;
   }
 }
 

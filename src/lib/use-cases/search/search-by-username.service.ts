@@ -1,8 +1,10 @@
 import { searchByUsernameRepo } from '../../domain-model/search-by-username.repo';
 import UseCaseBase from '../base.service';
 import {
+  ICommonSearchDBResponse,
   ISearchByUsernameParams,
   ISearchByUsernameResponse,
+  ISearchByUsernameResponseDump,
 } from '../../interfaces';
 
 export class SearchByUsernameService extends UseCaseBase<
@@ -20,12 +22,36 @@ export class SearchByUsernameService extends UseCaseBase<
   async execute(
     data: ISearchByUsernameParams,
   ): Promise<ISearchByUsernameResponse> {
-    console.log('SearchByUsernameService', data);
+    const response = await searchByUsernameRepo.searchByUserName(data);
 
-    const result = await searchByUsernameRepo.searchByUserName(data);
+    const dumpedResponse = this.dumpResponse(response);
 
-    console.log('SearchByUsernameService res', result);
+    return { data: dumpedResponse };
+  }
 
-    return { data: result } as any;
+  dumpResponse(data: ICommonSearchDBResponse): ISearchByUsernameResponseDump {
+    const { hits } = data.hits;
+
+    const dumpedResult: ISearchByUsernameResponseDump = {
+      total: {
+        value: data.hits.total.value,
+        relation: data.hits.total.relation,
+      },
+      hits:
+        // eslint-disable-next-line @typescript-eslint/typedef
+        hits?.map(hit => ({
+          userId: hit._source.userId,
+          userName: hit._source.userName,
+          firstName: hit._source.firstName,
+          languageCode: hit._source.languageCode,
+          messageId: hit._source.messageId,
+          question: hit._source.question,
+          response: hit._source.response,
+          requestDate: hit._source.requestDate,
+          responseDate: hit._source.responseDate,
+        })) ?? [],
+    };
+
+    return dumpedResult;
   }
 }

@@ -1,7 +1,7 @@
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/typesWithBodyKey';
 import { SearchSuggester } from '@elastic/elasticsearch/lib/api/types';
 import {
-  IFullTextSearchDBResponse,
+  ICommonSearchDBResponse,
   IFullTextSearchParams,
   TRange,
 } from '../interfaces';
@@ -15,7 +15,7 @@ export class FullTextSearchRepo extends UserRequestToGPTLog {
 
   async fullTextSearchInUserRequestLog(
     data: IFullTextSearchParams,
-  ): Promise<IFullTextSearchDBResponse> {
+  ): Promise<ICommonSearchDBResponse> {
     const {
       phraseToSearch,
       searchIn: fieldForSearch,
@@ -93,7 +93,7 @@ export class FullTextSearchRepo extends UserRequestToGPTLog {
       suggest: suggestQuery,
     });
 
-    return searchResponse as unknown as IFullTextSearchDBResponse;
+    return searchResponse as unknown as ICommonSearchDBResponse;
   }
 }
 

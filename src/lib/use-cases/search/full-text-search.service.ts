@@ -1,10 +1,10 @@
 import validator from 'validator';
 import { fullTextSearchRepo } from '../../domain-model/full-text-search.repo';
 import {
-  IFullTextSearchDBResponse,
   IFullTextSearchResponseDump,
   IFullTextSearchParams,
   IFullTextSearchResponse,
+  ICommonSearchDBResponse,
 } from '../../interfaces';
 import UseCaseBase from '../base.service';
 
@@ -38,9 +38,9 @@ export default class FullTextSearchService extends UseCaseBase<
     return { data: dumpedResponse };
   }
 
-  dumpResponse(data: IFullTextSearchDBResponse): IFullTextSearchResponseDump {
+  dumpResponse(data: ICommonSearchDBResponse): IFullTextSearchResponseDump {
     const { hits } = data.hits;
-    const suggestions = data.suggest.simple_phrase[0]?.options;
+    const suggestions = data?.suggest?.simple_phrase[0]?.options;
 
     const dumpedResult: IFullTextSearchResponseDump = {
       total: {

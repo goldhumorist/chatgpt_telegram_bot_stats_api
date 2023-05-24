@@ -43,7 +43,7 @@ export type IUnresolvedHits = Array<{
   _source: IUserRequestLog;
 }>;
 
-export interface IFullTextSearchDBResponse {
+export interface ICommonSearchDBResponse {
   took: string;
   timed_out: boolean;
   hits: {
@@ -54,7 +54,7 @@ export interface IFullTextSearchDBResponse {
     max_score: number;
     hits: IUnresolvedHits;
   };
-  suggest: {
+  suggest?: {
     simple_phrase: Array<{
       text: string;
       offset: number;
@@ -74,8 +74,10 @@ export interface IFullTextSearchResponseDump {
     relation: string;
   };
   hits: Array<IUserRequestLog>;
-  suggestions: IUserRequestLogSuggestions;
+  suggestions?: IUserRequestLogSuggestions;
 }
+
+export type ISearchByUsernameResponseDump = IFullTextSearchResponseDump;
 
 export interface IFullTextSearchParams {
   phraseToSearch: string;
@@ -99,7 +101,7 @@ export interface ISearchByUsernameParams {
 }
 
 export interface ISearchByUsernameResponse {
-  data: any;
+  data: ISearchByUsernameResponseDump;
 }
 
 export type TRange<T extends string> = {
