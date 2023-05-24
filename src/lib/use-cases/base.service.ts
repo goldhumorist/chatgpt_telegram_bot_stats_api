@@ -41,6 +41,7 @@ export default abstract class UseCaseBase<T, K> {
    *  Main method of use-case class
    *  Contains the main logic
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async execute(data: T): Promise<K> {
     throw new Error('METHOD IS NOT IMPLEMENTED IN BASE CLASS');
   }
