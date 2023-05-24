@@ -1,9 +1,3 @@
-export interface IUseCaseBase<T, K> {
-  execute(data: T): Promise<K>;
-  validate?(data: T): Promise<T>;
-  run?(params: T): Promise<K>;
-}
-
 export type TValidationErrosFields = { [key: string]: string };
 
 export interface IUserRequestLog {
@@ -16,6 +10,18 @@ export interface IUserRequestLog {
   response: string;
   requestDate: Date;
   responseDate: Date;
+}
+
+export interface IUserRequestLogKeyValue {
+  userId: string;
+  userName: string;
+  firstName: string;
+  languageCode: string;
+  messageId: string;
+  question: string;
+  response: string;
+  requestDate: string;
+  responseDate: string;
 }
 
 export interface ICustomErrorFields {
@@ -76,10 +82,26 @@ export interface IFullTextSearchParams {
   searchIn: 'question' | 'response';
   page: number;
   limit?: number;
-  searchFrom: string;
-  searchTo: string;
+  searchFrom?: string;
+  searchTo?: string;
 }
 
 export interface IFullTextSearchResponse {
   data: IFullTextSearchResponseDump;
 }
+
+export interface ISearchByUsernameParams {
+  username: string;
+  page: number;
+  limit?: number;
+  searchFrom?: string;
+  searchTo?: string;
+}
+
+export interface ISearchByUsernameResponse {
+  data: any;
+}
+
+export type TRange<T extends string> = {
+  [key in T]: { gte?: string; lte?: string };
+};

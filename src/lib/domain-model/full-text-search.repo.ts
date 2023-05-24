@@ -3,11 +3,16 @@ import { SearchSuggester } from '@elastic/elasticsearch/lib/api/types';
 import {
   IFullTextSearchDBResponse,
   IFullTextSearchParams,
+  TRange,
 } from '../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
+import { DEFAULT_PAGE_SIZE } from '../constans';
 
 export class FullTextSearchRepo extends UserRequestToGPTLog {
-  //
+  constructor() {
+    super();
+  }
+
   async fullTextSearchInUserRequestLog(
     data: IFullTextSearchParams,
   ): Promise<IFullTextSearchDBResponse> {
@@ -20,46 +25,42 @@ export class FullTextSearchRepo extends UserRequestToGPTLog {
       searchTo,
     } = data;
 
-    const size = limit ?? 20;
+    const size = limit ?? DEFAULT_PAGE_SIZE;
     const offset = size * page - size;
 
-    const range: { requestDate: { gte?: string; lte?: string } } = {
-      requestDate: {},
+    const requestDateField = this.schemaKeyValue.requestDate;
+
+    const range: TRange<typeof requestDateField> = {
+      [requestDateField]: {},
     };
-    if (searchFrom) range.requestDate.gte = searchFrom;
-    if (searchTo) range.requestDate.lte = searchTo;
+
+    if (searchFrom) range[requestDateField].gte = searchFrom;
+    if (searchTo) range[requestDateField].lte = searchTo;
 
     const searchQuery: QueryDslQueryContainer = {
       bool: {
-        must: [
+        should: [
           {
-            bool: {
-              should: [
-                {
-                  match: {
-                    [fieldForSearch]: {
-                      query: `${phraseToSearch}`,
-                      operator: 'or',
-                      fuzziness: 'auto',
-                    },
-                  },
-                },
-                {
-                  wildcard: {
-                    [fieldForSearch]: {
-                      value: `*${phraseToSearch}*`,
-                      boost: 1.0,
-                      rewrite: 'constant_score',
-                    },
-                  },
-                },
-              ],
+            match: {
+              [fieldForSearch]: {
+                query: `${phraseToSearch}`,
+                operator: 'or',
+                fuzziness: 'auto',
+              },
             },
           },
           {
-            range,
+            wildcard: {
+              [fieldForSearch]: {
+                value: `*${phraseToSearch}*`,
+                boost: 1.0,
+                rewrite: 'constant_score',
+              },
+            },
           },
         ],
+
+        filter: [{ range }],
       },
     };
 

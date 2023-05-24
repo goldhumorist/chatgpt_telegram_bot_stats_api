@@ -1,11 +1,23 @@
 import { Client } from '@elastic/elasticsearch';
-import { IUserRequestLog } from '../interfaces';
+import { IUserRequestLogKeyValue, IUserRequestLog } from '../interfaces';
 import { ElasticSearch } from '../infrastructure/elasticsearch/elasticsearch-connect';
 
 export class UserRequestToGPTLog {
-  schema: IUserRequestLog;
+  protected schemaTypes: IUserRequestLog;
 
-  USER_REQUEST_INDEX: string = 'user-request-to-chatgpt';
+  protected schemaKeyValue: IUserRequestLogKeyValue = {
+    userId: 'userId',
+    userName: 'userName',
+    firstName: 'firstName',
+    languageCode: 'languageCode',
+    messageId: 'messageId',
+    question: 'question',
+    response: 'response',
+    requestDate: 'requestDate',
+    responseDate: 'responseDate',
+  };
+
+  protected USER_REQUEST_INDEX: string = 'user-request-to-chatgpt';
 
   protected _client: Client;
 

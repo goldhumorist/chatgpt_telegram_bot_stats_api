@@ -5,14 +5,13 @@ import {
   IFullTextSearchResponseDump,
   IFullTextSearchParams,
   IFullTextSearchResponse,
-  IUseCaseBase,
 } from '../../interfaces';
 import UseCaseBase from '../base.service';
 
-export default class FullTextSearchService
-  extends UseCaseBase<IFullTextSearchParams, IFullTextSearchResponse>
-  implements IUseCaseBase<IFullTextSearchParams, IFullTextSearchResponse>
-{
+export default class FullTextSearchService extends UseCaseBase<
+  IFullTextSearchParams,
+  IFullTextSearchResponse
+> {
   static validationRules: IFullTextSearchParams = {
     phraseToSearch: ['required', { min_length: 2 }],
     searchIn: ['required', { one_of: ['question', 'response'] }],
