@@ -1,6 +1,6 @@
 import { Client } from '@elastic/elasticsearch';
-import { IUserRequestLogKeyValue, IUserRequestLog } from '../interfaces';
-import { ElasticSearch } from '../infrastructure/elasticsearch/elasticsearch-connect';
+import { ElasticSearch } from '../../infrastructure/elasticsearch/elasticsearch-connect';
+import { IUserRequestLog, IUserRequestLogKeyValue } from '../../interfaces';
 
 export class UserRequestToGPTLog {
   protected schemaTypes: IUserRequestLog;

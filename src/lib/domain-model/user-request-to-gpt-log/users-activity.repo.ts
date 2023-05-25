@@ -3,7 +3,7 @@ import {
   IUsersActivityParams,
   TRange,
   TSearchDBResponseWithAggrUserActivity,
-} from '../interfaces';
+} from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
 
 export class UsersActivityRepo extends UserRequestToGPTLog {

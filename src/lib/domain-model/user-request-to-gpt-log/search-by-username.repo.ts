@@ -3,9 +3,9 @@ import {
   TSearchDBResponseWithSuggestions,
   ISearchByUsernameParams,
   TRange,
-} from '../interfaces';
+} from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
-import { DEFAULT_PAGE_SIZE } from '../constans';
+import { DEFAULT_PAGE_SIZE } from '../../constans';
 
 export class SearchByUsernameRepo extends UserRequestToGPTLog {
   constructor() {

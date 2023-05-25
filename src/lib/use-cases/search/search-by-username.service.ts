@@ -1,4 +1,4 @@
-import { searchByUsernameRepo } from '../../domain-model/search-by-username.repo';
+import { UserRequestToGPTLog } from '../../domain-model/index';
 import UseCaseBase from '../base.service';
 import {
   TSearchDBResponseWithSuggestions,
@@ -6,6 +6,8 @@ import {
   ISearchByUsernameResponse,
   ISearchByUsernameResponseDump,
 } from '../../interfaces';
+
+const { SearchByUsernameRepo } = UserRequestToGPTLog;
 
 export class SearchByUsernameService extends UseCaseBase<
   ISearchByUsernameParams,
@@ -22,7 +24,7 @@ export class SearchByUsernameService extends UseCaseBase<
   async execute(
     data: ISearchByUsernameParams,
   ): Promise<ISearchByUsernameResponse> {
-    const response = await searchByUsernameRepo.searchByUserName(data);
+    const response = await SearchByUsernameRepo.searchByUserName(data);
 
     const dumpedResponse = this.dumpResponse(response);
 
