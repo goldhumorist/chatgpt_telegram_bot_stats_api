@@ -125,6 +125,7 @@ export interface IUsersActivityResponseDump {
   numberOfRemainingUsers: number;
   usersActivity: Array<{ key: string; doc_count: number }>;
 }
+
 export interface IUsersActivityResponse {
   data: IUsersActivityResponseDump;
 }
@@ -139,6 +140,32 @@ export type TSearchDBResponseWithAggrUserActivity = TCommonDBResponse & {
       doc_count_error_upper_bound: number;
       sum_other_doc_count: number;
       buckets: Array<{ key: string; doc_count: number }>;
+    };
+  };
+};
+
+export interface IUsageActivityParams {
+  calendarInterval: 'day' | 'week' | 'month';
+  searchFrom: string;
+  searchTo: string;
+}
+
+export interface IUsageActivityResponseDump {
+  usageActivity: Array<{
+    key_as_string: string;
+    key: number;
+    doc_count: number;
+  }>;
+}
+
+export interface IUsageActivityResponse {
+  data: IUsageActivityResponseDump;
+}
+
+export type TSearchDBResponseWithAggrUsageActivity = TCommonDBResponse & {
+  aggregations?: {
+    usageActivity: {
+      buckets: Array<{ key_as_string: string; key: number; doc_count: number }>;
     };
   };
 };
