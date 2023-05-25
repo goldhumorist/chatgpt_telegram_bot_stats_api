@@ -1,5 +1,6 @@
 import LIVR from 'livr';
 import { CustomError } from '../helpers/errors.helper';
+import { month_time_difference } from '../helpers/custom-LIVR-rules';
 
 LIVR.Validator.defaultAutoTrim(true);
 
@@ -29,6 +30,8 @@ export default abstract class UseCaseBase<T, K> {
       throw new Error('ValidationRules should be specified');
 
     const livrValidator = new LIVR.Validator(validationRules);
+
+    livrValidator.registerRules({ month_time_difference });
 
     const validData = livrValidator.validate(data);
 
