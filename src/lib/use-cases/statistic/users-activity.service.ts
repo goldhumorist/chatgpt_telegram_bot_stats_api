@@ -1,4 +1,4 @@
-import { usersActivityRepo } from '../../domain-model/users-activity.repo';
+import { UserRequestToGPTLog } from '../../domain-model/index';
 import {
   IUsersActivityParams,
   IUsersActivityResponse,
@@ -6,6 +6,8 @@ import {
   TSearchDBResponseWithAggrUserActivity,
 } from '../../interfaces';
 import UseCaseBase from '../base.service';
+
+const { UsersActivityRepo } = UserRequestToGPTLog;
 
 export class UsersActivityService extends UseCaseBase<
   IUsersActivityParams,
@@ -17,7 +19,7 @@ export class UsersActivityService extends UseCaseBase<
   } as unknown as IUsersActivityParams;
 
   async execute(data: IUsersActivityParams): Promise<IUsersActivityResponse> {
-    const response = await usersActivityRepo.getUsersActivityStatistic(data);
+    const response = await UsersActivityRepo.getUsersActivityStatistic(data);
 
     const dumpedResponse = this.dumpResponse(response);
 

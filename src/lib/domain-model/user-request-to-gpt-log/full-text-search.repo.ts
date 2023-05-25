@@ -4,9 +4,9 @@ import {
   TSearchDBResponseWithSuggestions,
   IFullTextSearchParams,
   TRange,
-} from '../interfaces';
+} from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
-import { DEFAULT_PAGE_SIZE } from '../constans';
+import { DEFAULT_PAGE_SIZE } from '../../constans';
 
 export class FullTextSearchRepo extends UserRequestToGPTLog {
   constructor() {

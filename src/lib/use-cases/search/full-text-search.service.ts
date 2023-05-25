@@ -1,5 +1,5 @@
 import validator from 'validator';
-import { fullTextSearchRepo } from '../../domain-model/full-text-search.repo';
+import { UserRequestToGPTLog } from '../../domain-model/index';
 import {
   TFullTextSearchResponseDump,
   IFullTextSearchParams,
@@ -7,6 +7,8 @@ import {
   TSearchDBResponseWithSuggestions,
 } from '../../interfaces';
 import UseCaseBase from '../base.service';
+
+const { FullTextSearchRepo } = UserRequestToGPTLog;
 
 export default class FullTextSearchService extends UseCaseBase<
   IFullTextSearchParams,
@@ -29,7 +31,7 @@ export default class FullTextSearchService extends UseCaseBase<
   }
 
   async execute(data: IFullTextSearchParams) {
-    const response = await fullTextSearchRepo.fullTextSearchInUserRequestLog(
+    const response = await FullTextSearchRepo.fullTextSearchInUserRequestLog(
       data,
     );
 
