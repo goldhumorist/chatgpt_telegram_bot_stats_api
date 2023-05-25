@@ -1,6 +1,5 @@
 import {
   IUsageActivityParams,
-  TRange,
   TSearchDBResponseWithAggrUsageActivity,
 } from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
@@ -16,12 +15,12 @@ export class UsageActivityRepo extends UserRequestToGPTLog {
     const { searchFrom, searchTo, calendarInterval } = data;
     const requestDateField = this.schemaKeyValue.requestDate;
 
-    const range: TRange<typeof requestDateField> = {
-      [requestDateField]: {},
+    const range = {
+      [requestDateField]: {
+        gte: searchFrom,
+        lte: searchTo,
+      },
     };
-
-    if (searchFrom) range[requestDateField].gte = searchFrom;
-    if (searchTo) range[requestDateField].lte = searchTo;
 
     const response = await this._client.search({
       index: this.USER_REQUEST_INDEX,

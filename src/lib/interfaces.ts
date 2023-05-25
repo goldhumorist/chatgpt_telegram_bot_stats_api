@@ -145,9 +145,9 @@ export type TSearchDBResponseWithAggrUserActivity = TCommonDBResponse & {
 };
 
 export interface IUsageActivityParams {
-  searchFrom?: string;
-  searchTo?: string;
   calendarInterval: 'day' | 'week' | 'month';
+  searchFrom: string;
+  searchTo: string;
 }
 
 export interface IUsageActivityResponseDump {
