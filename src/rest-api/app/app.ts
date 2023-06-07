@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import { loggerMiddleware } from '../../middlewares/logger.middleware';
 import Routers from '../routers/index';
 import { errorHandler, notFound } from '../../lib/helpers/not-found-error';
 
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 
 app.get('/favicon.ico', (req: Request, res: Response) => res.status(204));
+
+app.use(loggerMiddleware);
 
 app.use('/api/v1/search', mainSeachRouter);
 app.use('/api/v1/statistic', statisticRouter);

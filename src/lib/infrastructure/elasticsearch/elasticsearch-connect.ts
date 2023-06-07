@@ -1,6 +1,8 @@
 import { Client, HttpConnection } from '@elastic/elasticsearch';
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import { config } from '../../../config';
 
+const logger = loggerFactory.getLogger(__filename);
 export class ElasticSearch {
   /* eslint-disable no-use-before-define */
   private static instance: ElasticSearch;
@@ -24,10 +26,10 @@ export class ElasticSearch {
     ElasticSearch.client
       .ping()
       .then(() => {
-        console.log('Connected to Elasticsearch was successful!');
+        logger.info('Connected to Elasticsearch was successful!');
       })
       .catch((error: Error) => {
-        console.error('Connection to Elasticsearch unavailable', error);
+        logger.error('Connection to Elasticsearch unavailable', error);
         throw error;
       });
 

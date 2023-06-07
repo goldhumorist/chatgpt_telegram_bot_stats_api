@@ -1,6 +1,9 @@
 import LIVR from 'livr';
+import { loggerFactory } from '../../global-helpers/logger.helper';
 import { CustomError } from '../helpers/errors.helper';
 import { month_time_difference } from '../helpers/custom-LIVR-rules';
+
+const logger = loggerFactory.getLogger(__filename);
 
 LIVR.Validator.defaultAutoTrim(true);
 
@@ -32,6 +35,8 @@ export default abstract class UseCaseBase<T, K> {
     const livrValidator = new LIVR.Validator(validationRules);
 
     livrValidator.registerRules({ month_time_difference });
+
+    logger.info('All request data (before validation)', data);
 
     const validData = livrValidator.validate(data);
 

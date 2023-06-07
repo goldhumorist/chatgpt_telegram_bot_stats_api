@@ -3,6 +3,8 @@ import http from 'http';
 import { config } from '../config';
 import app from './app/app';
 import { ElasticSearch } from '../lib/infrastructure/elasticsearch/elasticsearch-connect';
+import { loggerFactory } from './../global-helpers/logger.helper';
+const logger = loggerFactory.getLogger(__filename);
 
 const port = normalizePort(config.SERVER.PORT);
 const host = config.SERVER.HOST;
@@ -17,17 +19,17 @@ server.on('listening', onListening);
  * Event listener for HTTP server "listening" event.
  */
 async function onListening() {
-  console.log(`CONFIG`, config);
+  logger.info(`CONFIG`, config);
 
   await ElasticSearch.getClient();
 
-  console.log(`Application is running on ${host}:${port}.`);
+  logger.info(`Application is running on ${host}:${port}.`);
 
   const address = server.address();
   const bind =
     typeof address === 'string' ? `pipe ${address}` : `port ${address?.port}`;
 
-  console.log(`Listening on ${bind}`);
+  logger.info(`Listening on ${bind}`);
 }
 
 /**
