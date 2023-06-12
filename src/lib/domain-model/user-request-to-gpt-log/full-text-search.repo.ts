@@ -1,5 +1,6 @@
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/typesWithBodyKey';
 import { SearchSuggester } from '@elastic/elasticsearch/lib/api/types';
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import {
   TSearchDBResponseWithSuggestions,
   IFullTextSearchParams,
@@ -7,6 +8,8 @@ import {
 } from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
 import { DEFAULT_PAGE_SIZE } from '../../constans';
+
+const logger = loggerFactory.getLogger(__filename);
 
 export class FullTextSearchRepo extends UserRequestToGPTLog {
   constructor() {
@@ -92,6 +95,8 @@ export class FullTextSearchRepo extends UserRequestToGPTLog {
       query: searchQuery,
       suggest: suggestQuery,
     });
+
+    logger.info('Response from DB', searchResponse);
 
     return searchResponse as unknown as TSearchDBResponseWithSuggestions;
   }

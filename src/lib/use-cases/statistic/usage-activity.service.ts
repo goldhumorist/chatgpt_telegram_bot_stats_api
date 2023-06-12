@@ -1,3 +1,4 @@
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import {
   IUsageActivityParams,
   IUsageActivityResponse,
@@ -6,6 +7,8 @@ import {
 } from '../../interfaces';
 import { UserRequestToGPTLog } from '../../domain-model/index';
 import UseCaseBase from '../base.service';
+
+const logger = loggerFactory.getLogger(__filename);
 
 const { UsageActivityRepo } = UserRequestToGPTLog;
 
@@ -27,6 +30,8 @@ export class UsageActivityService extends UseCaseBase<
     const response = await UsageActivityRepo.getUsageActivityStatistic(data);
 
     const dumpedResponse = this.dumpResponse(response);
+
+    logger.info('Dumped response', dumpedResponse);
 
     return { data: dumpedResponse };
   }

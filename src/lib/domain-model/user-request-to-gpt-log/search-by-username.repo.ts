@@ -1,4 +1,5 @@
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import {
   TSearchDBResponseWithSuggestions,
   ISearchByUsernameParams,
@@ -6,6 +7,8 @@ import {
 } from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
 import { DEFAULT_PAGE_SIZE } from '../../constans';
+
+const logger = loggerFactory.getLogger(__filename);
 
 export class SearchByUsernameRepo extends UserRequestToGPTLog {
   constructor() {
@@ -51,6 +54,8 @@ export class SearchByUsernameRepo extends UserRequestToGPTLog {
       size,
       query: searchQuery,
     });
+
+    logger.info('Response from DB', searchResponse);
 
     return searchResponse as any as TSearchDBResponseWithSuggestions;
   }

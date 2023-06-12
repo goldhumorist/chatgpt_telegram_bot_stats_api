@@ -1,4 +1,5 @@
 import validator from 'validator';
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import { UserRequestToGPTLog } from '../../domain-model/index';
 import {
   TFullTextSearchResponseDump,
@@ -7,6 +8,8 @@ import {
   TSearchDBResponseWithSuggestions,
 } from '../../interfaces';
 import UseCaseBase from '../base.service';
+
+const logger = loggerFactory.getLogger(__filename);
 
 const { FullTextSearchRepo } = UserRequestToGPTLog;
 
@@ -36,6 +39,8 @@ export default class FullTextSearchService extends UseCaseBase<
     );
 
     const dumpedResponse = this.dumpResponse(response);
+
+    logger.info('Dumped response', dumpedResponse);
 
     return { data: dumpedResponse };
   }

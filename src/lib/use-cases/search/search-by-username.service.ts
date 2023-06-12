@@ -1,3 +1,4 @@
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import { UserRequestToGPTLog } from '../../domain-model/index';
 import UseCaseBase from '../base.service';
 import {
@@ -6,6 +7,8 @@ import {
   ISearchByUsernameResponse,
   ISearchByUsernameResponseDump,
 } from '../../interfaces';
+
+const logger = loggerFactory.getLogger(__filename);
 
 const { SearchByUsernameRepo } = UserRequestToGPTLog;
 
@@ -27,6 +30,8 @@ export class SearchByUsernameService extends UseCaseBase<
     const response = await SearchByUsernameRepo.searchByUserName(data);
 
     const dumpedResponse = this.dumpResponse(response);
+
+    logger.info('Dumped response', dumpedResponse);
 
     return { data: dumpedResponse };
   }

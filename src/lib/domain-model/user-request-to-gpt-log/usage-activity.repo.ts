@@ -1,8 +1,11 @@
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import {
   IUsageActivityParams,
   TSearchDBResponseWithAggrUsageActivity,
 } from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
+
+const logger = loggerFactory.getLogger(__filename);
 
 export class UsageActivityRepo extends UserRequestToGPTLog {
   constructor() {
@@ -39,6 +42,8 @@ export class UsageActivityRepo extends UserRequestToGPTLog {
         },
       },
     });
+
+    logger.info('Response from DB', response);
 
     return response as unknown as TSearchDBResponseWithAggrUsageActivity;
   }
