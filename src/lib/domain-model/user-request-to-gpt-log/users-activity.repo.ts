@@ -1,3 +1,4 @@
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import {
   IUniqueUsersAggregation,
   IUsersActivityParams,
@@ -5,6 +6,8 @@ import {
   TSearchDBResponseWithAggrUserActivity,
 } from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
+
+const logger = loggerFactory.getLogger(__filename);
 
 export class UsersActivityRepo extends UserRequestToGPTLog {
   constructor() {
@@ -50,7 +53,7 @@ export class UsersActivityRepo extends UserRequestToGPTLog {
     }
     if (searchTo) range[requestDateField].lte = searchTo;
 
-    const usersActivity = await this._client.search({
+    const response = await this._client.search({
       index: this.USER_REQUEST_INDEX,
       size: 0,
       query: {
@@ -68,7 +71,9 @@ export class UsersActivityRepo extends UserRequestToGPTLog {
       },
     });
 
-    return usersActivity as any as TSearchDBResponseWithAggrUserActivity;
+    logger.info('Response from DB', response);
+
+    return response as any as TSearchDBResponseWithAggrUserActivity;
   }
 }
 

@@ -1,3 +1,4 @@
+import { loggerFactory } from '../../../global-helpers/logger.helper';
 import { UserRequestToGPTLog } from '../../domain-model/index';
 import {
   IUsersActivityParams,
@@ -6,6 +7,8 @@ import {
   TSearchDBResponseWithAggrUserActivity,
 } from '../../interfaces';
 import UseCaseBase from '../base.service';
+
+const logger = loggerFactory.getLogger(__filename);
 
 const { UsersActivityRepo } = UserRequestToGPTLog;
 
@@ -22,6 +25,8 @@ export class UsersActivityService extends UseCaseBase<
     const response = await UsersActivityRepo.getUsersActivityStatistic(data);
 
     const dumpedResponse = this.dumpResponse(response);
+
+    logger.info('Dumped response', dumpedResponse);
 
     return { data: dumpedResponse };
   }
