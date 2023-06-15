@@ -1,16 +1,16 @@
 import { Request } from 'express';
 import { SearchByUsernameService } from '../../lib/use-cases/search/search-by-username.service';
 import FullTextSearchService from '../../lib/use-cases/search/full-text-search.service';
-import chista from '../utils/chistaUtils';
+import { makeUseCaseRunner } from '../utils/use-case-runner';
 
 export default {
-  fullTextSearch: chista.makeUseCaseRunner(
-    FullTextSearchService,
+  fullTextSearch: makeUseCaseRunner(
+    new FullTextSearchService(),
     (req: Request) => req.query,
   ),
 
-  searchByUsername: chista.makeUseCaseRunner(
-    SearchByUsernameService,
+  searchByUsername: makeUseCaseRunner(
+    new SearchByUsernameService(),
     (req: Request) => req.query,
   ),
 };
