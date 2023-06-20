@@ -42,27 +42,32 @@ export class FullTextSearchRepo extends UserRequestToGPTLog {
 
     const searchQuery: QueryDslQueryContainer = {
       bool: {
-        should: [
+        must: [
           {
-            match: {
-              [fieldForSearch]: {
-                query: `${phraseToSearch}`,
-                operator: 'or',
-                fuzziness: 'auto',
-              },
-            },
-          },
-          {
-            wildcard: {
-              [fieldForSearch]: {
-                value: `*${phraseToSearch}*`,
-                boost: 1.0,
-                rewrite: 'constant_score',
-              },
+            bool: {
+              should: [
+                {
+                  match: {
+                    [fieldForSearch]: {
+                      query: `${phraseToSearch}`,
+                      operator: 'or',
+                      fuzziness: 'auto',
+                    },
+                  },
+                },
+                {
+                  wildcard: {
+                    [fieldForSearch]: {
+                      value: `*${phraseToSearch}*`,
+                      boost: 1.0,
+                      rewrite: 'constant_score',
+                    },
+                  },
+                },
+              ],
             },
           },
         ],
-
         filter: [{ range }],
       },
     };

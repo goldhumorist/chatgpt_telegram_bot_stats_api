@@ -30,7 +30,7 @@ export class UsageActivityRepo extends UserRequestToGPTLog {
       size: 0,
       query: {
         bool: {
-          filter: [{ range }],
+          must: [{ range }],
         },
       },
       aggregations: {
