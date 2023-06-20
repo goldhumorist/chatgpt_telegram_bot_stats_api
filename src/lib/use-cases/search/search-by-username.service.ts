@@ -2,10 +2,10 @@ import { loggerFactory } from '../../../global-helpers/logger.helper';
 import { UserRequestToGPTLog } from '../../domain-model/index';
 import UseCaseBase from '../base.service';
 import {
-  TSearchDBResponseWithSuggestions,
   ISearchByUsernameParams,
   ISearchByUsernameResponse,
   ISearchByUsernameResponseDump,
+  TCommonDBResponse,
 } from '../../interfaces';
 
 const logger = loggerFactory.getLogger(__filename);
@@ -36,9 +36,7 @@ export class SearchByUsernameService extends UseCaseBase<
     return { data: dumpedResponse };
   }
 
-  dumpResponse(
-    data: TSearchDBResponseWithSuggestions,
-  ): ISearchByUsernameResponseDump {
+  dumpResponse(data: TCommonDBResponse): ISearchByUsernameResponseDump {
     const { hits } = data.hits;
 
     const dumpedResult: ISearchByUsernameResponseDump = {

@@ -58,14 +58,14 @@ export class UsersActivityRepo extends UserRequestToGPTLog {
       size: 0,
       query: {
         bool: {
-          filter: [{ range }],
+          must: [{ range }],
         },
       },
       aggregations: {
         usersActivity: {
           terms: {
-            field: `${usernameField}`,
-            size: numberOfUniqueUsers || 1,
+            field: usernameField,
+            size: numberOfUniqueUsers,
           },
         },
       },

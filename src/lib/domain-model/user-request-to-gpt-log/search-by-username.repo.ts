@@ -1,9 +1,9 @@
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { loggerFactory } from '../../../global-helpers/logger.helper';
 import {
-  TSearchDBResponseWithSuggestions,
   ISearchByUsernameParams,
   TRange,
+  TCommonDBResponse,
 } from '../../interfaces';
 import { UserRequestToGPTLog } from './user-request-gpt-log';
 import { DEFAULT_PAGE_SIZE } from '../../constans';
@@ -57,7 +57,7 @@ export class SearchByUsernameRepo extends UserRequestToGPTLog {
 
     logger.info('Response from DB', searchResponse);
 
-    return searchResponse as any as TSearchDBResponseWithSuggestions;
+    return searchResponse as any as TCommonDBResponse;
   }
 }
 

@@ -49,7 +49,7 @@ export default class FullTextSearchService extends UseCaseBase<
     data: TSearchDBResponseWithSuggestions,
   ): TFullTextSearchResponseDump {
     const { hits } = data.hits;
-    const suggestions = data.suggest.simple_phrase[0]?.options;
+    const suggestions = data.suggest?.simple_phrase[0]?.options;
 
     const dumpedResult: TFullTextSearchResponseDump = {
       total: {
